@@ -37,4 +37,5 @@ Route::get('/internship-completion', 'Admin\CertificateController@getInternshipC
 Route::post('/internship-completion-list', 'Admin\CertificateController@getInternshipCompletionList')->name('internship.completion.list');
 Route::get('/internship-certificate/{id}', 'Admin\CertificateController@internshipCertificate')->name('internship.certificate');
 Route::post('/internship-completion-save', 'Admin\CertificateController@internshipCompletionSave')->name('internship.completion.save');
+Route::get('/certificate-of-completion/{id}', 'Admin\CertificateController@viewCompletionCertificate')->name('view.certificate');
 

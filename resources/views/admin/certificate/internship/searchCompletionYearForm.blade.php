@@ -88,175 +88,38 @@
 </div>
 
 
-<!-- <div class="mdc-layout-grid"> -->
-    <!-- <div class="mdc-layout-grid__inner">
+<div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
         <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
             <div class="mdc-card p-0">
-                <h6 class="card-title card-padding pb-0">Clinical Work Detail</h6>
+                <h6 class="card-title card-padding pb-0">Internship Completion List</h6>
                 <div class="table-responsive p-4">
-                    <table class="table table-striped table-bordered" id="perticularsTable">
+                    <table class="table table-striped table-bordered" id="datatable">
                         <thead>
                             <tr>
-                                <th scope="row">Schedule</th>
-                                <th scope="row">Duration</th>
-                                <th scope="row">StartDate</th>
-                                <th scope="row">EndDate</th>
-                                <th scope="row">OrientationPrgmCollegeName</th>
-                                <th scope="row">place</th>
+                                <th scope="row">Session</th>
+                                <th scope="row">Program</th>
+                                <th scope="row">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="perticularsBody">
-
+                        <tbody>
+                        @foreach($internship as $i)
+                            <tr>
+                                <td>{{ $i->session }}</td>
+                                <td>{{ $i->program }}</td>
+                                <td>
+                                <a href="{{ route('view.certificate', $i->id) }}" type="button" class="text-dark" title="view"><i class="fa fa-eye"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
-                    <button style="background-color:#27ae60;color:white;font-weight:bold;" type="submit" class="btn btn-block btn-sm" type="submit" id="butsave" value="Submit">SAVE INTERNSHIP CERTIFICATE</button>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     @section('customjs')
-    <script>
-       
-        $(document).ready(function(){
-            $('#checkbox1').change(function(){
-            if($('#checkbox1').is(':checked'))
-            {
-                $('.disableRow1').prop('disabled',false);
-            }
-            else{
-                $('.disableRow1').prop('disabled',true);
-            }
-            });
-
-            $('#checkbox2').change(function(){
-            if($('#checkbox2').is(':checked'))
-            {
-                $('.disableRow2').prop('disabled',false);
-            }
-            else{
-                $('.disableRow2').prop('disabled',true);
-            }
-            });
-
-            $('#checkbox3').change(function(){
-            if($('#checkbox3').is(':checked'))
-            {
-                $('.disableRow3').prop('disabled',false);
-            }
-            else{
-                $('.disableRow3').prop('disabled',true);
-            }
-            });
-
-            $('#checkbox4').change(function(){
-            if($('#checkbox4').is(':checked'))
-            {
-                $('.disableRow4').prop('disabled',false);
-            }
-            else{
-                $('.disableRow4').prop('disabled',true);
-            }
-            });
-    } );
-
-    </script>
+   
     @endsection
-    <!-- <script type="text/javascript">
-	function appendRow(id) {
-
-		var buttonId = id;
-		var buttonString = String(buttonId);
-		var intBtnId = buttonString.substring(3, buttonString.length);
-        //alert(intBtnId);
-		var schedule = document.getElementById("schedule" + intBtnId + "").textContent;
-        // alert(schedule);
-		var duration = document.getElementById("duration" + intBtnId + "").textContent;
-		var startDate = document.getElementById("startDate" + intBtnId + "").value;
-		var oriattationPrgmCollegeName = document
-				.getElementById("oriattationPrgmCollegeName" + intBtnId + "").textContent;
-		var endDate = document.getElementById("endDate" + intBtnId + "").value;
-		var place = document.getElementById("place" + intBtnId + "").value;
-
-		if (schedule == "") {
-			alert("Enter Schedule");
-			return false;
-		} else if (duration == "") {
-			alert("Enter Duration");
-			return false;
-
-		} else if (startDate == "") {
-			alert("Select The Start Date");
-			return false;
-
-		} else if (endDate == "") {
-			alert("Select The End Date");
-			return false;
-
-		} else if (place == "") {
-			alert("Enter The Place");
-			return false;
-
-		} else if (oriattationPrgmCollegeName == "") {
-			alert("Enter The Orientation");
-			return false;
-
-		}
-
-		var table = document.getElementById('perticularsBody');
-		var row = table.insertRow(0);
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
-		var cell4 = row.insertCell(3);
-		var cell5 = row.insertCell(4);
-		var cell6 = row.insertCell(5);
-
-		cell1.innerHTML = schedule;
-		cell2.innerHTML = duration;
-		cell3.innerHTML = startDate;
-		cell4.innerHTML = endDate;
-		cell5.innerHTML = oriattationPrgmCollegeName;
-		cell6.innerHTML = place;
-	}
-</script>
-<script>
-    $(document).ready(function(){
-        $("#butsave").click(function(){
-            var buttonId = id;
-            var buttonString = String(buttonId);
-            var intBtnId = buttonString.substring(3, buttonString.length);
-            // var lastRowId =  $('#table1 tr:last').attr("id");
-            // var schedule = new Array();
-            // var duration = new Array();
-            // var startDate = new Array();
-            // var endDate = new Array();
-            // var place = new Array();
-            // var oriattationPrgmCollegeName = new Array();
-            var schedule = document.getElementById("schedule" + intBtnId + "").textContent;
-		    var duration = document.getElementById("duration" + intBtnId + "").textContent;
-            var startDate = document.getElementById("startDate" + intBtnId + "").value;
-		    var oriattationPrgmCollegeName = document.getElementById("oriattationPrgmCollegeName" + intBtnId + "").textContent;
-		    var endDate = document.getElementById("endDate" + intBtnId + "").value;
-		    var place = document.getElementById("place" + intBtnId + "").value;
-            var firstname = $('.firstname').val();
-            var middlename = $('.middlename').val();
-            var lastname = $('.lastname').val();
-            var sessionyear = $('.sessionyear').val();
-            var sessionseason = $('.sessionseason').val();
-            var date = $('.date').val();
-
-            for(var i = 1; i<=lastRowId; i++)
-            {
-                schedule.push($("#"+i+".firstname"+i).html());
-                middlename.push($("#"+i+".middlename"+i).html());
-                lastname.push($("#"+i+".lastname"+i).html());
-                sessionyear.push($("#"+i+".sessionyear"+i).html());
-                sessionseason.push($("#"+i+".sessionseason"+i).html());
-                date.push($("#"+i+".date"+i).html());
-            }
-            
-        });
-    });
-    
-</script> -->
+  
     @endsection

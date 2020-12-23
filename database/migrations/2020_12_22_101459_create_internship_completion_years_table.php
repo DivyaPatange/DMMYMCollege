@@ -15,6 +15,8 @@ class CreateInternshipCompletionYearsTable extends Migration
     {
         Schema::create('internship_completion_years', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('internship_completion_id');
+            $table->foreign('internship_completion_id')->references('id')->on('internship_completions')->onDelete('cascade');
             $table->string('internship_season');
             $table->string('internship_year');
             $table->timestamps();

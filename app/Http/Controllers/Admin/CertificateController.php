@@ -230,7 +230,8 @@ class CertificateController extends Controller
 // *********************intership end************************
     public function getInternshipCompletion()
     {
-        return view('admin.certificate.internship.searchCompletionYearForm');
+        $internship = InternshipCompletion::all();
+        return view('admin.certificate.internship.searchCompletionYearForm', compact('internship'));
     }
     public function internshipCertificate($id)
     {
@@ -254,75 +255,39 @@ class CertificateController extends Controller
         }
     }
 
-    public function createPdf(Request $request)
-    {
-        if ($files = $request->data) {
-             
-            //store file into document folder
-            $file = $request->file->store('public/documents');
- 
-            //store your file into database
-            //$document = new Document();
-            //$document->title = $file;
-            //$document->save();
-              
-            return Response()->json([
-                "success" => true,
-                "file" => $file
-            ]);
-  
-        }
-  
-        return Response()->json([
-                "success" => false,
-                "file" => ''
-          ]);
-
-    }
 
     public function internshipCompletionSave(Request $request)
     {
         if($request->ajax())
         {
-            // $data = $request->only('ID','Name');
-            $obj = json_decode($request->table,true);;
-            foreach($obj as $item) {
-                mysql_query("INSERT INTO `internship_completion_students` (serial_no, name) 
-                VALUES ('".$item['ID']."', '".$item['Name']."')");
-         
-              }
-            // InternshipCompletionStudent::create($studentDetails);
-            // for($i = 0; $i<count($studentDetails); $i++)
-            // {
-                // $student = new InternshipCompletionStudent();
-                // $student->serial_no = $studentDetails->ID;
-                // $student->name = $studentDetails->Name;
-                // $student->save();
-            // }
-            // foreach($studentDetails as $d)
-            // {
-            //     $student = new InternshipCompletionStudent();
-            //     $student->serial_no = $d['ID'];
-            //     $student->name = $d['Name'];
-            //     $student->save();
-            // }
-            // for($i=0; $i<count($studentDetails); $i++)
-            // {
-            //     $student = new InternshipCompletionStudent();
-            //     if(is_numeric($i))
-            //     {
-            //         $student->serial_no = $i;
-                    
-                
-            //     $student->save();
-            //     }
-            //     if(is_string($i))
-            //     {
-            //         $student->name = $i;
-            //     }
-            // }
-            return $studentDetails;
+            $internshipCompletionID = $request->internshipCompletionID;
+            $internshipYear = $request->internshipYear;
+            $internshipSeason = $request->internshipSeason;
+            $obj = json_decode($request->Data, true);
+            // $someObject = json_decode($someJSON);
+            for($i=0; $i<count($obj); $i++)
+            {
+                $internship = new InternshipCompletionStudent();
+                $internship->internship_completion_id = $internshipCompletionID;
+                $internship->serial_no = $obj[$i]["ID"];
+                $internship->name = $obj[$i]["Name"];
+                $internship->save();
+            }
+            $internshipSession = new InternshipCompletionYear();
+            $internshipSession->internship_completion_id = $internshipCompletionID;
+            $internshipSession->internship_season = $internshipSeason;
+            $internshipSession->internship_year = $internshipYear;
+            $internshipSession->save();
+            // return $obj[0]["Name"];
         }
+    }
+
+    public function viewCompletionCertificate($id)
+    {
+        $internship = InternshipCompletion::findorfail($id);
+        $internshipCompletionStudent = InternshipCompletionStudent::where('internship_completion_id', $id)->get();
+        $internshipCompletionSeason = InternshipCompletionYear::where('internship_completion_id', $id)->first();
+        return view('admin.certificate.internship.viewCertificate', compact('internship', 'internshipCompletionStudent', 'internshipCompletionSeason'));
     }
 
 } // class end

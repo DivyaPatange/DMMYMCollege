@@ -67,7 +67,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <p style="text-indent: 100px; text-align:justify; padding:10px">आपणांस कळविण्यांत येत आहे की ,खालील विद्यार्थी अंतिम वर्ष बी .ए .एम .एस <span id="exam">____</span><span id="placedExam"></span> <span id="placedYear"></span><span id="academicYear">____</span> या परीक्षेत उत्तीर्ण झाले आहेत तरी आपले रुग्णलयाचे विभागात प्रशिक्षणार्थी 
+                                <p style="text-indent: 100px; text-align:justify; padding:10px">आपणांस कळविण्यांत येत आहे की ,खालील विद्यार्थी अंतिम वर्ष बी .ए .एम .एस @if(!empty($internshipCompletionSeason)){{ $internshipCompletionSeason->internship_season }} @endif @if(!empty($internshipCompletionSeason)) {{ $internshipCompletionSeason->internship_year }} @endif या परीक्षेत उत्तीर्ण झाले आहेत तरी आपले रुग्णलयाचे विभागात प्रशिक्षणार्थी 
 म्हणून 06 महिन्याचे प्रशिक्षण कालावधीकरीता प्रशिक्षणार्थी 
 म्हणून रुजू करून घेवून त्याबाबतचा रुजु अहवाल 
 कार्यालयास सादर करावा .</p>
@@ -82,41 +82,6 @@
                 </div>
                 
             </div>
-            <div class="row" id="myForm">
-                <div class="col-md-3 ml-3">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Enter Serial No." id="serialNo" onfocus="this.value=''">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Enter Student Name" onfocus="this.value=''" id="studentName">
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <a type="button" id="adddetails" onclick="appendRow();"><i class='fas fa-plus-circle' style='font-size:24px'></i></a>
-                </div>
-                <input type="hidden" id="internship_completion_id" value="{{ $internshipRecord->id }}">
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <select class="form-control" id="session" onchange="getSession(this)">
-                            <option value="">-Select Exam-</option>
-                            <option value="हिवाळा">हिवाळा</option>
-                            <option value="उन्हाळा">उन्हाळा</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <select class="form-control" id="year" onchange="getYear(this)">
-                            <option value="">-Select Seesion Year-</option>
-                            @for($i=2010; $i < 2040; $i++)
-                            <option value="{{ $i }}">{{ $i }}</option>
-                            @endfor
-                        </select>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-md-6 ml-3">
                     <table class="table table-bordered" style="width: 100%;margin-left:1.5%;margin-top:2%;" id="table_example">
@@ -128,7 +93,12 @@
 							</tr>
 						</thead>
 						<tbody id="perticularsBody">
-
+                        @foreach($internshipCompletionStudent as $i)
+                            <tr>
+                                <td>{{ $i->serial_no }}</td>
+                                <td>{{ $i->name }}</td>
+                            </tr>
+                        @endforeach
 						</tbody>
 					</table>
                 </div>
@@ -144,54 +114,12 @@
         </div>
     </div>
         <div class="col-md-12 text-center mt-3">
-            <button type="button" onclick="printContent('printdiv')" usesubmitbehaviour="False" class="btn btn-primary" id="print" disabled>Print</button>
-            <button type="button" onclick="submitForm()" class="btn btn-success" id="save">Save</button>
+            <button type="button" onclick="printContent('printdiv')" usesubmitbehaviour="False" class="btn btn-primary" id="print">Print</button>
         </div>
 
 <!-- plugins:js -->
 @include('admin.admin_layouts.scripts')
 <script>
-$.ajaxSetup({
-headers: {
-'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-}
-});
-</script>
-<script>
-		function appendRow() {
-			var studentName = document.getElementById('studentName').value;
-			var serialNum = document.getElementById('serialNo').value;
-
-			if (studentName == "") {
-				alert("Enter Student Name");
-				return false;
-			} else if (serialNum == "") {
-				alert("Enter Serial Number");
-				return false;
-
-			}
-
-			var table = document.getElementById('perticularsBody');
-			var row = table.insertRow(0);
-			var cell1 = row.insertCell(0);
-			var cell2 = row.insertCell(1);
-
-			cell1.innerHTML = serialNum;
-			cell2.innerHTML = studentName;
-
-		}
-		function getSession(selectObject) {
-  var value = selectObject.value; 
-  $("span#exam").remove();
-  $('span#placedExam').html(value);
-  console.log(value);
-}
-function getYear(selectObject) {
-  var value = selectObject.value; 
-  $("span#academicYear").remove();
-  $('span#placedYear').html(value);
-  console.log(value);
-}
   function printContent(el){
       
       var restorepage = document.body.innerHTML;
@@ -200,46 +128,7 @@ function getYear(selectObject) {
       window.print();
       document.body.innerHTML = restorepage;
   }
-  function submitForm() {
-    var internshipYear = $('#year').val(); 
-    var internshipSeason = $('#session').val();
-    var internshipCompletionID = $('#internship_completion_id').val();
-    // alert(internshipSeason);
-    var TableData = new Array();
-    $('#table_example tr').each(function(row, tr) {
-        TableData[row] = {
-        "ID": $(tr).find('td:eq(0)').text(),
-        "Name": $(tr).find('td:eq(1)').text()
-        }//tableData[row]
-    });
-    TableData.shift(); // first row will be empty - so remove
-    var Data;
-    Data = JSON.stringify(TableData);
-    if(Data != '' && internshipSeason != '' && internshipYear != ''){
-        if (($('#myForm').is(":visible"))) {
-        $("#serialNo").hide();
-        $("#studentName").hide();
-        $("#session").hide();
-        $("#year").hide();
-        $("#adddetails").hide();
-        }
-		$.ajax({
-			url: "{{ route('internship.completion.save') }}",
-			method: "POST",
-			data: {Data:Data, internshipYear:internshipYear, internshipSeason:internshipSeason, internshipCompletionID:internshipCompletionID},
-			success: function(data){
-                console.log(data);
-                alert('Record Saved Successfully');
-			}
-		});
-        document.getElementById("print").removeAttribute("disabled");
-        document.getElementById("save").setAttribute("disabled", "");
-	}
-    else{
-        alert("Please fill input Data.");
-    }
-    
-}
+
 </script>
 </body>
 </html> 

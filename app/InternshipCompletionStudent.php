@@ -8,5 +8,5 @@ class InternshipCompletionStudent extends Model
 {
     protected $table = "internship_completion_students";
 
-    protected $fillable = ['serial_no', 'name'];
+    protected $fillabe = ['internship_completion_id', 'serial_no', 'name'];
 }

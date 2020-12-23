@@ -15,6 +15,8 @@ class CreateInternshipCompletionStudentsTable extends Migration
     {
         Schema::create('internship_completion_students', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('internship_completion_id');
+            $table->foreign('internship_completion_id')->references('id')->on('internship_completions')->onDelete('cascade');
             $table->string('serial_no');
             $table->string('name');
             $table->timestamps();
