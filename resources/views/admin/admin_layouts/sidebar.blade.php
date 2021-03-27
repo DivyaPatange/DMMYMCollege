@@ -77,12 +77,12 @@
               </a>
             </div> -->
             
-            <!-- <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="S">
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="{{ route('admin.bonafide.certificate') }}">
                 <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">grid_on</i>
-                Attempt Certificate
+                Bonafide Certificate
               </a>
-            </div> -->
+            </div>
             <!-- <div class="mdc-list-item mdc-drawer-item">
               <a class="mdc-drawer-link" href="pages/charts/chartjs.html">
                 <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">pie_chart_outlined</i>

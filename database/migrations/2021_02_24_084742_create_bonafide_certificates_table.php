@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateBonafideCertificatesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('bonafide_certificates', function (Blueprint $table) {
+            $table->id();
+            $table->string('student_name')->nullable();
+            $table->string('class')->nullable();
+            $table->string('year')->nullable();
+            $table->date('dob')->nullable();
+            $table->date('date')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('bonafide_certificates');
+    }
+}
