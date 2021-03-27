@@ -44,3 +44,7 @@ Route::get('/bonafide-certificate-view', 'Admin\BonafideController@view')->name(
 Route::post('/save-bonafied-details', 'Admin\BonafideController@store')->name('store.bonafied.certificate');
 Route::get('/print-bonafide-certificate/{id}', 'Admin\BonafideController@show')->name('view.bonafide');
 
+Route::get('/leaving-certificate', 'Admin\LeavingController@index')->name('admin.leaving.certificate');
+Route::get('/leaving-certificate-view', 'Admin\LeavingController@view')->name('leaving.certificate.view');
+Route::post('/save-leaving-details', 'Admin\LeavingController@store')->name('store.leaving.certificate');
+Route::get('/print-leaving-certificate/{id}', 'Admin\LeavingController@show')->name('view.leaving');

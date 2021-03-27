@@ -47,7 +47,18 @@
                 </nav>
               </div>
             </div>
-            
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="{{ route('admin.bonafide.certificate') }}">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">grid_on</i>
+                Bonafide Certificate
+              </a>
+            </div>
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="{{ route('admin.leaving.certificate') }}">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">grid_on</i>
+                Leaving Certificate
+              </a>
+            </div>
 
             
             <!-- <div class="mdc-list-item mdc-drawer-item">
