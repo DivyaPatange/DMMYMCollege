@@ -39,3 +39,12 @@ Route::get('/internship-certificate/{id}', 'Admin\CertificateController@internsh
 Route::post('/internship-completion-save', 'Admin\CertificateController@internshipCompletionSave')->name('internship.completion.save');
 Route::get('/certificate-of-completion/{id}', 'Admin\CertificateController@viewCompletionCertificate')->name('view.certificate');
 
+Route::get('/bonafide-certificate', 'Admin\BonafideController@index')->name('admin.bonafide.certificate');
+Route::get('/bonafide-certificate-view', 'Admin\BonafideController@view')->name('bonafide.certificate.view');
+Route::post('/save-bonafied-details', 'Admin\BonafideController@store')->name('store.bonafied.certificate');
+Route::get('/print-bonafide-certificate/{id}', 'Admin\BonafideController@show')->name('view.bonafide');
+
+Route::get('/leaving-certificate', 'Admin\LeavingController@index')->name('admin.leaving.certificate');
+Route::get('/leaving-certificate-view', 'Admin\LeavingController@view')->name('leaving.certificate.view');
+Route::post('/save-leaving-details', 'Admin\LeavingController@store')->name('store.leaving.certificate');
+Route::get('/print-leaving-certificate/{id}', 'Admin\LeavingController@show')->name('view.leaving');
