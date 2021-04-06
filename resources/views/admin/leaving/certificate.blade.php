@@ -55,7 +55,7 @@
                         <p><b>|| Dhanwantaray Namah ||</b></p>
                         <p><b>Ayurved Seva Samiti, Yavatmal Sanchalit</b></p>
                         <p><b>Affiliated to Maharashtra University of Health Sciences, Nashik</b></p>
-                        <p><b>Grant in aid by Maharashtra State Government</b></p>
+                        <p><b>Grant in aid by Government of Maharashtra</b></p>
                         <p><b>(Appendix II)</b></p>
                     </div>
                 </div>
@@ -76,16 +76,17 @@
                     <div class="col-md-12">
                         <p style="text-indent:30%; word-spacing: 0.5em;
     font-size: 19px;
-    line-height: 2.5rem; text-align:justify">This is to certify that <input type="text" name="name" id="name" size="50%"><span id="name_err" class="text-danger"></span> son / daughter of <input type="text" name="parent_name" id="parent_name" size="90%"><span id="parent_err" class="text-danger"></span> Caste <input type="text" name="caste" id="caste" size="40%"><span id="caste_err" class="text-danger"></span>
+    line-height: 2.5rem; text-align:justify">This is to certify that <input type="text" name="name" id="name" size="50%"><span id="name_err" class="text-danger"></span> son / daughter of <input type="text" name="parent_name" id="parent_name" size="80%"><span id="parent_err" class="text-danger"></span> Caste <input type="text" name="caste" id="caste" size="40%"><span id="caste_err" class="text-danger"></span>
                             Nationality - Indian attended D. M. M. Ayurved Mahavidyalaya Yavatmal From <input type="date" id="session_from" name="session_from"><span id="s_from_err" class="text-danger"></span> to <input type="date" name="session_to" id="session_to"><span id="s_to_err" class="text-danger"></span> and now leaves on <input type="text" name="leave_day" id="leave_day" size="40%"><span id="l_day_err" class="text-danger"></span> day of 
-                            <input type="date" name="leave_date" id="leave_date"><span id="l_date_err" class="text-danger"></span> having paid all fees due to the college upto to end of <input type="date" id="fee_date" name="fee_date"><span id="f_date_err" class="text-danger"></span>
+                            <input type="text" name="leave_month" id="leave_month"><span id="l_date_err" class="text-danger"></span> <select id="leave_year" name="leave_year" style="width:14%">@for($i=2000; $i < 2050; $i++)<option value="{{ $i }}">{{ $i }}</option>@endfor</select> <span id="l_year_err" class="text-danger"></span> having paid all fees due to the college upto to end of <input type="text" id="fee_date" name="fee_date"><span id="f_date_err" class="text-danger"></span><select id="fee_year" name="fee_year" style="width:14%">@for($i=2000; $i < 2050; $i++)<option value="{{ $i }}">{{ $i }}</option>@endfor</select>
+                            <span id="f_year_err" class="text-danger"></span>
                         </p>
                         <p style="text-indent:30%; word-spacing: 0.5em;
     font-size: 19px;
     line-height: 2.5rem; text-align:justify">The date of his/her Birth according to the college register is <input type="date" name="dob" id="dob"><span id="dob_err" class="text-danger"></span></p>
                         <p style="text-indent:30%; word-spacing: 0.5em;
     font-size: 19px;
-    line-height: 2.5rem; text-align:justify">The last Annual Examination passed him/her was that of class <input type="text" name="class" id="class"><span id="class_err" class="text-danger"></span> in the year <input type="month" id="passing_year" name="passing_year"><span id="passing_err" class="text-danger"></span></p>
+    line-height: 2.5rem; text-align:justify">The last Annual Examination passed him/her was that of class <input type="text" name="class" id="class"><span id="class_err" class="text-danger"></span> in the year <input type="text" id="passing_season" name="passing_season"><span id="passing_err" class="text-danger"></span><select id="passing_year" name="passing_year" style="width:14%">@for($i=2000; $i < 2050; $i++)<option value="{{ $i }}">{{ $i }}</option>@endfor</select> <span id="passing_year_err" class="text-danger"></span></p>
                         <p style="text-indent:30%; word-spacing: 0.5em;
     font-size: 19px;
     line-height: 2.5rem; text-align:justify">He / She enrolled in a class <input type="text" name="enroll_class" id="enroll_class"><span id="enroll_err" class="text-danger"></span> & his / her PRN No. of Maharashtra University of Health Sciences, Nashik is <input type="text" name="prn_no" id="prn_no"><span id="prn_err" class="text-danger"></span></p>
@@ -98,8 +99,8 @@
                         </p>
                         <p style="text-indent:30%;word-spacing: 0.5em;
     font-size: 19px;
-    line-height: 2.5rem; text-align:justify">The Total amount of fees received for the year <input type="text" name="received_fee" id="received_fee" size="50%"><span id="received_err" class="text-danger"></span> Reason for Leaving college
-                            <input type="text" name="leaving_reason" id="leaving_reason" size="120%"><span id="reason_err" class="text-danger"></span> Remarks <input type="text" name="remarks" id="remarks" size="100%"><span id="remark_err" class="text-danger"></span>
+    line-height: 2.5rem; text-align:justify"> Reason for Leaving college
+                            <input type="text" name="leaving_reason" id="leaving_reason" size="80%"><span id="reason_err" class="text-danger"></span> Remarks <input type="text" name="remarks" id="remarks" size="80%"><span id="remark_err" class="text-danger"></span>
                         </p>
                     </div>
                 </div>
@@ -120,6 +121,7 @@
             </div>    
         </div>
     </div>
+
     <div class="col-md-12 text-center mt-3">
         <button type="button" onclick="return checkError()" class="btn btn-success">Save</button>
     </div>
@@ -194,17 +196,24 @@
         return false;
     }
     var leave_day = $("#leave_day").val();
-    if (session_to=="") {
+    if (leave_day=="") {
         $("#l_day_err").fadeIn().html("Required");
         setTimeout(function(){ $("#l_day_err").fadeOut(); }, 3000);
         $("#leave_day").focus();
         return false;
     }
-    var leave_date = $("#leave_date").val();
-    if (leave_date=="") {
+    var leave_month = $("#leave_date").val();
+    if (leave_month=="") {
         $("#l_date_err").fadeIn().html("Required");
         setTimeout(function(){ $("#l_date_err").fadeOut(); }, 3000);
-        $("#leave_date").focus();
+        $("#leave_month").focus();
+        return false;
+    }
+    var leave_year = $("#leave_year").val();
+    if (leave_year=="") {
+        $("#l_year_err").fadeIn().html("Required");
+        setTimeout(function(){ $("#l_year_err").fadeOut(); }, 3000);
+        $("#leave_year").focus();
         return false;
     }
     var fee_date = $("#fee_date").val();
@@ -212,6 +221,13 @@
         $("#f_date_err").fadeIn().html("Required");
         setTimeout(function(){ $("#f_date_err").fadeOut(); }, 3000);
         $("#fee_date").focus();
+        return false;
+    }
+    var fee_year = $("#fee_year").val();
+    if (fee_date=="") {
+        $("#f_year_err").fadeIn().html("Required");
+        setTimeout(function(){ $("#f_year_err").fadeOut(); }, 3000);
+        $("#fee_year").focus();
         return false;
     }
     var dob = $("#dob").val();
@@ -228,10 +244,17 @@
         $("#class").focus();
         return false;
     }
-    var passing_year = $("#passing_year").val();
-    if (passing_year=="") {
+    var passing_season = $("#passing_season").val();
+    if (passing_season=="") {
         $("#passing_err").fadeIn().html("Required");
         setTimeout(function(){ $("#passing_err").fadeOut(); }, 3000);
+        $("#passing_season").focus();
+        return false;
+    }
+    var passing_year = $("#passing_year").val();
+    if (passing_year=="") {
+        $("#passing_year_err").fadeIn().html("Required");
+        setTimeout(function(){ $("#passing_year_err").fadeOut(); }, 3000);
         $("#passing_year").focus();
         return false;
     }
@@ -254,13 +277,6 @@
         $("#performance_err").fadeIn().html("Required");
         setTimeout(function(){ $("#performance_err").fadeOut(); }, 3000);
         $("input[name='performance']").focus();
-        return false;
-    }
-    var received_fee = $("#received_fee").val();
-    if (received_fee=="") {
-        $("#received_err").fadeIn().html("Required");
-        setTimeout(function(){ $("#received_err").fadeOut(); }, 3000);
-        $("#received_fee").focus();
         return false;
     }
     var leaving_reason = $("#leaving_reason").val();

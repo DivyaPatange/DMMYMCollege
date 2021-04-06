@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\LeavingCertificate;
+use DB;
 
 class LeavingController extends Controller
 {
@@ -21,21 +22,30 @@ class LeavingController extends Controller
 
     public function store(Request $request)
     {
+        $branchId = DB::table('leaving_certificates')->max('id');
+        // dd($branchId);
         $leaving = new LeavingCertificate();
         $leaving->adm_reg_no = $request->adm_reg_no;
         $leaving->serial_no = $request->serial_no;
         $leaving->page_no = $request->page_no;
+        if(!empty($branchId))
+        {
+            $leaving->tc_no = $branchId + 1;
+        }
+        else{
+            $leaving->tc_no = 1;
+        }
         $leaving->name = $request->name;
         $leaving->parent_name = $request->parent_name;
         $leaving->caste = $request->caste;
         $leaving->session_from = $request->session_from;
         $leaving->session_to = $request->session_to;
         $leaving->leave_on = $request->leave_day;
-        $leaving->leave_date = $request->leave_date;
-        $leaving->end_date = $request->fee_date;
+        $leaving->leave_date = $request->leave_month.' '.$request->leave_year;
+        $leaving->end_date = $request->fee_date.' '.$request->fee_year;
         $leaving->dob = $request->dob;
         $leaving->class = $request->class;
-        $leaving->year = $request->passing_year;
+        $leaving->year = $request->passing_season.' '.$request->passing_year;
         $leaving->enroll_class = $request->enroll_class;
         $leaving->prn_no = $request->prn_no;
         $leaving->performance = $request->performance;

@@ -18,6 +18,7 @@ class CreateLeavingCertificatesTable extends Migration
             $table->string('adm_reg_no')->nullable();
             $table->string('serial_no')->nullable();
             $table->string('page_no')->nullable();
+            $table->string('tc_no')->nullable();
             $table->string('name')->nullable();
             $table->string('parent_name')->nullable();
             $table->string('caste')->nullable();
