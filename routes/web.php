@@ -48,3 +48,10 @@ Route::get('/leaving-certificate', 'Admin\LeavingController@index')->name('admin
 Route::get('/leaving-certificate-view', 'Admin\LeavingController@view')->name('leaving.certificate.view');
 Route::post('/save-leaving-details', 'Admin\LeavingController@store')->name('store.leaving.certificate');
 Route::get('/print-leaving-certificate/{id}', 'Admin\LeavingController@show')->name('view.leaving');
+Route::get('/leaving-certificate/edit/{id}', 'Admin\LeavingController@edit')->name('edit.leaving');
+Route::put('/leaving-certificate/update/{id}', 'Admin\LeavingController@update')->name('update.leaving.certificate');
+
+Route::get('/internship-certificate', 'Admin\InternshipController@index')->name('admin.internship.certificate');
+Route::get('/internship-certificate-view', 'Admin\InternshipController@view')->name('internship.certificate.view');
+Route::post('/save-internship-details', 'Admin\InternshipController@store')->name('store.internship.certificate');
+Route::get('/print-internship-certificate/{id}', 'Admin\InternshipController@show')->name('view.internship');
